@@ -1,6 +1,6 @@
-package com.niemczuk.passwordwallet.repositories;
+package com.niemczuk.passwordwallet.repository;
 
-import com.niemczuk.passwordwallet.models.User;
+import com.niemczuk.passwordwallet.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

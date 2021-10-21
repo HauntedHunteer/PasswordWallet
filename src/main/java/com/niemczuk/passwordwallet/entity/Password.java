@@ -1,4 +1,4 @@
-package com.niemczuk.passwordwallet.models;
+package com.niemczuk.passwordwallet.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
