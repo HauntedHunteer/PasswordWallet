@@ -3,6 +3,8 @@ package com.niemczuk.passwordwallet.service;
 import com.niemczuk.passwordwallet.dto.RegistrationDto;
 import com.niemczuk.passwordwallet.entity.User;
 import com.niemczuk.passwordwallet.repository.UserRepository;
+import com.niemczuk.passwordwallet.security.passwordEncoder.HmacPasswordEncoder;
+import com.niemczuk.passwordwallet.utility.AuthExtras;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,7 +29,7 @@ public class UserService {
     }
 
     public void saveUser(RegistrationDto registrationDto) {
-        String encodedPassword = ""; //todo remove
+        String encodedPassword;
         String salt = null;
 
         if(!registrationDto.isPasswordKeptAsHash()) {
@@ -35,7 +37,8 @@ public class UserService {
             encodedPassword = passwordEncoder.encode(salt + registrationDto.getPassword());
         }
         else {
-            //todo HMAC impl
+            PasswordEncoder passwordEncoder = new HmacPasswordEncoder(AuthExtras.getKey());
+            encodedPassword = passwordEncoder.encode(registrationDto.getPassword());
         }
 
         User newUser = User.builder()
