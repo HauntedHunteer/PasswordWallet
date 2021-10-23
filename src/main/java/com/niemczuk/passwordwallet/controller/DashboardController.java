@@ -1,10 +1,10 @@
 package com.niemczuk.passwordwallet.controller;
 
+import com.niemczuk.passwordwallet.dto.ChangePasswordDto;
 import com.niemczuk.passwordwallet.dto.PasswordPackageDto;
 import com.niemczuk.passwordwallet.entity.User;
 import com.niemczuk.passwordwallet.service.PasswordService;
 import com.niemczuk.passwordwallet.service.UserService;
-import com.niemczuk.passwordwallet.utility.AuthExtras;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -55,5 +55,18 @@ public class DashboardController {
     public String getPasswordList(Model model) throws Exception {
         model.addAttribute("passwordsList", passwordService.getPasswordList());
         return "websitesListPage";
+    }
+
+    @GetMapping("/changePassword")
+    public String getChangePasswordFormPage(Model model) {
+        ChangePasswordDto changePasswordDto = new ChangePasswordDto();
+        model.addAttribute("changePasswordDto", changePasswordDto);
+        return "changePasswordForm";
+    }
+
+    @PostMapping("/changePassword")
+    public String changePassword(@ModelAttribute @Valid ChangePasswordDto changePasswordDto) throws Exception {
+        passwordService.changeUserPassword(changePasswordDto);
+        return "redirect:/signIn";
     }
 }
