@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegistrationDto {
+public class PasswordPackageDto {
 
     @NotBlank
     private String login;
@@ -19,6 +19,8 @@ public class RegistrationDto {
     @NotBlank
     private String password;
 
-    private boolean isPasswordKeptAsHash;
+    @NotBlank
+    private String webAddress;
 
+    private String description;
 }
