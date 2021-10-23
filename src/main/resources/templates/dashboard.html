@@ -3,8 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <title>PasswordWallet</title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/navbar.css}" rel="stylesheet">
+    <script th:href="@{/js/bootstrap.bundle.min.js}"></script>
 </head>
-<body>
-    <p>Hello</p>
+<body th:object="${user}">
+
+    <nav class="navbar navbar-expand navbar-dark bg-primary" aria-label="Tenth navbar example">
+        <div class="container-fluid">
+            <a class="navbar-brand disabled" href="#">Password Wallet</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarsExample03">
+                <ul class="navbar-nav me-auto mb-2 mb-sm-0">
+                    <li class="nav-item">
+                        <form class="nav-link form-inline my-2 my-lg-0" method="post" th:action="@{/logout}">
+                            <button class="btn btn-danger my-2 my-sm-0 btn-sm"
+                                    type="submit">Log out
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <h1> Hello <span th:text="${user.login}"> </span></h1>
+
 </body>
 </html>
