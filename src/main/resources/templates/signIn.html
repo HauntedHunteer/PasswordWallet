@@ -5,7 +5,7 @@
     <title>PasswordWallet</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="../static/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -23,27 +23,33 @@
     </style>
 
     <!-- Custom styles for this template -->
-    <link href="../static/signInAndUp.css" rel="stylesheet">
+    <link th:href="@{/css/signInAndUp.css}" rel="stylesheet">
 </head>
 <body class="text-center">
 
 <main class="form-signin">
-    <form>
-        <img class="mb-4" src="../static/assets/images/password-svgrepo-com.svg" alt="" width="72" height="57">
+    <form th:action="@{/signIn}" method="post">
+        <img class="mb-4" th:src="@{/images/password-svgrepo-com.svg}" alt="" width="72" height="57">
         <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
         <div class="form-floating">
-            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <input class="form-control" id="floatingInput" name="login" placeholder="name@example.com">
             <label for="floatingInput">Login</label>
         </div>
         <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
             <label for="floatingPassword">Password</label>
         </div>
 
         <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-        <p class="mt-5 mb-3 text-muted"> Password Wallet 2021</p>
     </form>
+
+    <hr/>
+
+    <form th:action="@{/signUp}">
+        <button class="w-100 btn btn-lg btn-secondary" type="submit">Sign up</button>
+    </form>
+    <p class="mt-5 mb-3 text-muted"> Password Wallet 2021</p>
 </main>
 
 
