@@ -5,7 +5,6 @@ import com.niemczuk.passwordwallet.entity.Password;
 import com.niemczuk.passwordwallet.entity.User;
 import com.niemczuk.passwordwallet.repository.PasswordRepository;
 import com.niemczuk.passwordwallet.repository.UserRepository;
-import com.niemczuk.passwordwallet.utility.AESenc;
 import com.niemczuk.passwordwallet.utility.AuthExtras;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,7 @@ import org.springframework.stereotype.Service;
 import static com.niemczuk.passwordwallet.utility.AESenc.*;
 
 import java.security.Key;
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -37,7 +37,7 @@ public class PasswordService {
     public void saveNewWebsiteCredentials(PasswordPackageDto passwordPackageDto) throws Exception {
         User user = getLoggedUser();
 
-        Key key = generateKey(AuthExtras.getHashedPasswordForDashboard());
+        Key key = generateKey(user.getPasswordHash());
         String encryptedPasswordToStore = encrypt(passwordPackageDto.getPassword(), key);
 
         Password newPassword = Password.builder()
@@ -55,7 +55,7 @@ public class PasswordService {
         User user = getLoggedUser();
 
         List<PasswordPackageDto> passwordList = passwordRepository.findAllByUserCustom(user);
-        Key key = generateKey(AuthExtras.getHashedPasswordForDashboard());
+        Key key = generateKey(user.getPasswordHash());
 
         passwordList.forEach(e -> {
             String password = e.getPassword();

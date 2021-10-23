@@ -26,7 +26,7 @@
     <link th:href="@{/css/navbar.css}" rel="stylesheet">
     <script th:href="@{/js/bootstrap.bundle.min.js}"></script>
 </head>
-<body th:object="${user}">
+<body>
 <main>
     <nav class="navbar navbar-expand navbar-dark bg-primary" aria-label="Second navbar example">
         <div class="container-fluid">
@@ -42,7 +42,7 @@
                         <a class="nav-link" aria-current="page" th:href="@{/websitesList}">Passwords List</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" th:href="@{/website}">Add new website</a>
+                        <a class="nav-link active" aria-current="page" th:href="@{/website}">Add new website</a>
                     </li>
                     <li class="nav-item">
                         <form class="nav-link form-inline my-2 my-lg-0" method="post" th:action="@{/logout}">
@@ -55,8 +55,47 @@
             </div>
         </div>
     </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col">
 
-    <h1> Hello <span th:text="${user.login}"> </span></h1>
+            </div>
+            <div class="col">
+
+            </div>
+            <div class="col">
+                <form th:action="@{/website}" th:object="${passwordPackageDto}" method="post">
+                    <h1 class="h3 mb-3 fw-normal">Add new website</h1>
+
+                    <div class="form-floating my-2">
+                        <input class="form-control" id="floatingInput1" th:field="*{webAddress}" name="address" placeholder="Web address">
+                        <label for="floatingInput1">Web address</label>
+                    </div>
+                    <div class="form-floating my-2">
+                        <input class="form-control" id="floatingInput2" th:field="*{login}" name="login" placeholder="Login">
+                        <label for="floatingInput2">Login</label>
+                    </div>
+                    <div class="form-floating my-2">
+                        <input type="password" class="form-control" id="floatingPassword" th:field="*{password}" name="password" placeholder="Password">
+                        <label for="floatingPassword">Password</label>
+                    </div>
+                    <div class="form-floating my-2">
+                        <input class="form-control" id="floatingInput3" th:field="*{description}" name="description" placeholder="Description">
+                        <label for="floatingInput3">Description</label>
+                    </div>
+
+                    <button class="w-100 btn btn-lg btn-primary" type="submit">Add</button>
+                </form>
+                <p class="mt-5 mb-3 text-muted"> Password Wallet 2021</p>
+            </div>
+            <div class="col">
+
+            </div>
+            <div class="col">
+
+            </div>
+        </div>
+    </div>
 </main>
 </body>
 </html>
