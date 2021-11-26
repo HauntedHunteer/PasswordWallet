@@ -6,6 +6,7 @@ import com.niemczuk.passwordwallet.repository.UserRepository;
 import com.niemczuk.passwordwallet.security.passwordEncoder.HmacPasswordEncoder;
 import com.niemczuk.passwordwallet.utility.AuthExtras;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,11 @@ public class UserService {
     }
 
     public User findUserByLogin(String login) {
-        return userRepository.findByLogin(login);
+        if (userRepository.existsByLogin(login)) {
+            return userRepository.findByLogin(login);
+        }
+
+        throw new UsernameNotFoundException("User does not exist!");
     }
 
     public void saveUser(RegistrationDto registrationDto) {
