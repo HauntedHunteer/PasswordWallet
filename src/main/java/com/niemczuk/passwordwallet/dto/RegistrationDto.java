@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -13,10 +14,13 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class RegistrationDto {
 
-    @NotBlank
+
+    @NotBlank(message = "User's name cannot be empty")
+    @Size(min = 5, max = 250)
     private String login;
 
-    @NotBlank
+    @NotBlank(message = "Password cannot be empty")
+    @Size(min = 8, max = 16)
     private String password;
 
     private boolean isPasswordKeptAsHash;
