@@ -1,6 +1,7 @@
 package com.niemczuk.passwordwallet.security.passwordEncoder;
 
 import com.niemczuk.passwordwallet.utility.AuthExtras;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.codec.Utf8;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -9,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+@Slf4j
 public class Sha512PasswordEncoder implements PasswordEncoder {
 
     @Override
@@ -32,6 +34,7 @@ public class Sha512PasswordEncoder implements PasswordEncoder {
             }
 
             // return the HashText
+            log.info(hashText.toString());
             return hashText.toString();
         }
 
@@ -45,11 +48,16 @@ public class Sha512PasswordEncoder implements PasswordEncoder {
     public boolean matches(CharSequence plainTextPassword, String encodedPassword) {
         String salt = AuthExtras.getSalt();
 
+
         if (plainTextPassword == null || encodedPassword == null) {
             return false;
         }
 
         String encodedRawPassword = encode(salt + plainTextPassword);
+        log.info(plainTextPassword.toString());
+        log.info(salt);
+        log.info(encodedRawPassword);
+        log.info(encodedPassword);
 
         return MessageDigest.isEqual(Utf8.encode(encodedRawPassword), Utf8.encode(encodedPassword));
     }

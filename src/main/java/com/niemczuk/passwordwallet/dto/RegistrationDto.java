@@ -15,12 +15,12 @@ import javax.validation.constraints.Size;
 public class RegistrationDto {
 
 
-    @NotBlank(message = "User's name cannot be empty")
-    @Size(min = 5, max = 250)
+    //@NotBlank(message = "User's name cannot be empty")
+    //@Size(min = 5, max = 250)
     private String login;
 
-    @NotBlank(message = "Password cannot be empty")
-    @Size(min = 8, max = 16)
+    // @NotBlank(message = "Password cannot be empty")
+    // @Size(min = 8, max = 16)
     private String password;
 
     private boolean isPasswordKeptAsHash;

@@ -30,7 +30,9 @@ public class UserService {
             return userRepository.findByLogin(login);
         }
 
-        throw new UsernameNotFoundException("User does not exist!");
+        return null;
+
+       // throw new UsernameNotFoundException("User does not exist!");
     }
 
     public void saveUser(RegistrationDto registrationDto) {

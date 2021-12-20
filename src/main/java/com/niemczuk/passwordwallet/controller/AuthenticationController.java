@@ -35,12 +35,12 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signUp")
-    public String register(@ModelAttribute @Valid RegistrationDto registrationDto) {
+    public String register(@ModelAttribute RegistrationDto registrationDto) {
         // todo try with optional
         User possibleUser = userService.findUserByLogin(registrationDto.getLogin());
 
         if (possibleUser != null) {
-            return "signUp"; // todo for now next make validation
+            return "signUp";
         }
         else {
             userService.saveUser(registrationDto);
