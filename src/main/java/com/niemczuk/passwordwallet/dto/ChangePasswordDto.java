@@ -14,8 +14,8 @@ import javax.validation.constraints.NotBlank;
 public class ChangePasswordDto {
 
     @NotBlank
-    String oldPassword;
+    private String oldPassword;
 
     @NotBlank
-    String newPassword;
+    private String newPassword;
 }
