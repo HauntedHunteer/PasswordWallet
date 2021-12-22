@@ -1,6 +1,7 @@
 package com.niemczuk.passwordwallet.service;
 
 import com.niemczuk.passwordwallet.dto.RegistrationDto;
+import com.niemczuk.passwordwallet.repository.AppLoginRepository;
 import com.niemczuk.passwordwallet.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,8 @@ class UserServiceTest {
     @Mock
     UserRepository userRepository;
     @Mock
+    AppLoginRepository appLoginRepository;
+    @Mock
     PasswordEncoder passwordEncoder;
 
     UserService userService;
@@ -28,7 +31,7 @@ class UserServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        userService = new UserService(userRepository, passwordEncoder);
+        userService = new UserService(userRepository, appLoginRepository, passwordEncoder);
         Authentication authentication = Mockito.mock(Authentication.class);
         SecurityContext securityContext = Mockito.mock(SecurityContext.class);
         Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);

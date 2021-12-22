@@ -1,7 +1,10 @@
 package com.niemczuk.passwordwallet.service;
 
+import com.niemczuk.passwordwallet.dto.AppLoginDto;
 import com.niemczuk.passwordwallet.dto.RegistrationDto;
+import com.niemczuk.passwordwallet.entity.AppLogin;
 import com.niemczuk.passwordwallet.entity.User;
+import com.niemczuk.passwordwallet.repository.AppLoginRepository;
 import com.niemczuk.passwordwallet.repository.UserRepository;
 import com.niemczuk.passwordwallet.security.passwordEncoder.HmacPasswordEncoder;
 import com.niemczuk.passwordwallet.utility.AuthExtras;
@@ -22,11 +25,13 @@ public class UserService {
     private static final long LOCK_TIME_DURATION_MIN = 10;
 
     private final UserRepository userRepository;
+    private final AppLoginRepository appLoginRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, AppLoginRepository appLoginRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.appLoginRepository = appLoginRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -102,5 +107,15 @@ public class UserService {
         }
 
         return false;
+    }
+
+    public void registerAppLogin(AppLoginDto appLoginDto) {
+        AppLogin appLogin = AppLogin.builder()
+                .user(appLoginDto.getUser())
+                .loginTime(appLoginDto.getLoginTime())
+                .loginResult(appLoginDto.getLoginResult())
+                .ipAddress(appLoginDto.getIpAddress())
+                .build();
+        appLoginRepository.save(appLogin);
     }
 }

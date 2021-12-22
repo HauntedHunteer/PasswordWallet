@@ -1,5 +1,6 @@
 package com.niemczuk.passwordwallet.security;
 
+import com.niemczuk.passwordwallet.dto.AppLoginDto;
 import com.niemczuk.passwordwallet.entity.User;
 import com.niemczuk.passwordwallet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 
 @Component
@@ -25,8 +27,13 @@ public class CustomLoginFailureHandler extends SimpleUrlAuthenticationFailureHan
         String login = request.getParameter("login");
         User user = userService.findUserByLogin(login);
 
+        String ipAddress = request.getRemoteAddr();
+        LocalDateTime loginTime = LocalDateTime.now();
+
+        AppLoginDto loginData = new AppLoginDto(user, loginTime, "fail", ipAddress);
 
         if (user !=null) {
+            userService.registerAppLogin(loginData);
             if (user.isAccountNonLocked()) {
                 if (user.getFailedAttempt() < UserService.MAX_FAILED_ATTEMPTS - 1) {
                     userService.increaseFailedAttempts(user);
