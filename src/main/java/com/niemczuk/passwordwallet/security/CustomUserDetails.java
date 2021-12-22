@@ -1,8 +1,6 @@
 package com.niemczuk.passwordwallet.security;
 
 import com.niemczuk.passwordwallet.entity.User;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -32,7 +30,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getPasswordHash();
+        return user.getLogin();
     }
 
     @Override

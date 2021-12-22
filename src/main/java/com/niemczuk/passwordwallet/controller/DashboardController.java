@@ -40,10 +40,7 @@ public class DashboardController {
     @GetMapping("/dashboard")
     public String showDashboardPage(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        log.info("name:"+ auth.getName()); // todo auth not working properly
-        CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
-        User user = userDetails.getUser();
-        //User user = userService.findUserByLogin(auth.getName());
+        User user = userService.findUserByLogin(auth.getName());
         model.addAttribute("user", user);
 
         List<AppLoginReadDto> logins = userService.findAppLogins(user);
