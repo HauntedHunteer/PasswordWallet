@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>PasswordWallet</title>
@@ -59,7 +59,25 @@
         </div>
     </nav>
 
-    <h1> Hello <!--<span th:text="${user.login}"> </span>--></h1>
+    <h1> Hello <span th:text="${user.login}"> </span></h1>
+
+    <h6>Your last logins</h6>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Login Time</th>
+            <th scope="col">Login Result</th>
+            <th scope="col">IP address</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="login : ${logins}">
+            <td th:text="${login.loginTime}"></td>
+            <td th:text="${login.loginResult}"></td>
+            <td th:text="${login.ipAddress}"></td>
+        </tr>
+        </tbody>
+    </table>
 </main>
 </body>
 </html>

@@ -1,6 +1,6 @@
 package com.niemczuk.passwordwallet.security;
 
-import com.niemczuk.passwordwallet.dto.AppLoginDto;
+import com.niemczuk.passwordwallet.dto.AppLoginSaveDto;
 import com.niemczuk.passwordwallet.entity.User;
 import com.niemczuk.passwordwallet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         String ipAddress = request.getRemoteAddr();
         LocalDateTime loginTime = LocalDateTime.now();
 
-        AppLoginDto loginData = new AppLoginDto(user, loginTime, "success", ipAddress);
+        AppLoginSaveDto loginData = new AppLoginSaveDto(user, loginTime, "success", ipAddress);
 
         userService.registerAppLogin(loginData);
 

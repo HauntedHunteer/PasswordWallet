@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AppLoginDto {
+public class AppLoginSaveDto {
 
     private User user;
 

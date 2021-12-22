@@ -1,6 +1,7 @@
 package com.niemczuk.passwordwallet.service;
 
-import com.niemczuk.passwordwallet.dto.AppLoginDto;
+import com.niemczuk.passwordwallet.dto.AppLoginReadDto;
+import com.niemczuk.passwordwallet.dto.AppLoginSaveDto;
 import com.niemczuk.passwordwallet.dto.RegistrationDto;
 import com.niemczuk.passwordwallet.entity.AppLogin;
 import com.niemczuk.passwordwallet.entity.User;
@@ -9,13 +10,13 @@ import com.niemczuk.passwordwallet.repository.UserRepository;
 import com.niemczuk.passwordwallet.security.passwordEncoder.HmacPasswordEncoder;
 import com.niemczuk.passwordwallet.utility.AuthExtras;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Base64;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -109,13 +110,17 @@ public class UserService {
         return false;
     }
 
-    public void registerAppLogin(AppLoginDto appLoginDto) {
+    public void registerAppLogin(AppLoginSaveDto appLoginSaveDto) {
         AppLogin appLogin = AppLogin.builder()
-                .user(appLoginDto.getUser())
-                .loginTime(appLoginDto.getLoginTime())
-                .loginResult(appLoginDto.getLoginResult())
-                .ipAddress(appLoginDto.getIpAddress())
+                .user(appLoginSaveDto.getUser())
+                .loginTime(appLoginSaveDto.getLoginTime())
+                .loginResult(appLoginSaveDto.getLoginResult())
+                .ipAddress(appLoginSaveDto.getIpAddress())
                 .build();
         appLoginRepository.save(appLogin);
+    }
+
+    public List<AppLoginReadDto> findAppLogins(User user) {
+        return appLoginRepository.findAllByUserCustom(user);
     }
 }
