@@ -11,10 +11,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
+import java.time.LocalDateTime;
 import java.util.Base64;
 
 @Service
 public class UserService {
+
+    public static final int MAX_FAILED_ATTEMPTS = 3;
+
+    private static final long LOCK_TIME_DURATION_MIN = 10;
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -31,8 +36,6 @@ public class UserService {
         }
 
         return null;
-
-       // throw new UsernameNotFoundException("User does not exist!");
     }
 
     public void saveUser(RegistrationDto registrationDto) {
@@ -53,6 +56,7 @@ public class UserService {
                 .passwordHash(encodedPassword)
                 .salt(salt)
                 .isPasswordKeptAsHash(registrationDto.isPasswordKeptAsHash())
+                .accountNonLocked(true)
                 .build();
 
         userRepository.save(newUser);
@@ -64,5 +68,39 @@ public class UserService {
         random.nextBytes(bytes);
         Base64.Encoder encoder = Base64.getUrlEncoder().withoutPadding();
         return encoder.encodeToString(bytes);
+    }
+
+    public void increaseFailedAttempts(User user) {
+        int newFailAttempts = user.getFailedAttempt() + 1;
+
+        userRepository.updateFailedAttempts(newFailAttempts, user.getLogin());
+    }
+
+    public void resetFailedAttempts(String login) {
+        userRepository.updateFailedAttempts(0, login);
+    }
+
+    public void lock(User user) {
+        user.setAccountNonLocked(false);
+        user.setLockTime(LocalDateTime.now());
+
+        userRepository.save(user);
+    }
+
+    public boolean unlockWhenTimeExpired(User user) {
+        LocalDateTime lockTime = user.getLockTime();
+        LocalDateTime unlockTime = lockTime.plusMinutes(LOCK_TIME_DURATION_MIN);
+
+        if (unlockTime.isBefore(LocalDateTime.now())) {
+            user.setAccountNonLocked(true);
+            user.setLockTime(null);
+            user.setFailedAttempt(0);
+
+            userRepository.save(user);
+
+            return true;
+        }
+
+        return false;
     }
 }

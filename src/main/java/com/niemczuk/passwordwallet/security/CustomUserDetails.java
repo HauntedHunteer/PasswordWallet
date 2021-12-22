@@ -1,5 +1,6 @@
 package com.niemczuk.passwordwallet.security;
 
+import com.niemczuk.passwordwallet.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -7,12 +8,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
-@NoArgsConstructor
-@AllArgsConstructor
 public class CustomUserDetails implements UserDetails {
 
-    private String username;
-    private String password;
+    private final User user;
+
+    public CustomUserDetails(User user) {
+        this.user = user;
+    }
+
+    public User getUser() {
+        return user;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -21,12 +27,12 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return password;
+        return user.getPasswordHash();
     }
 
     @Override
     public String getUsername() {
-        return username;
+        return user.getPasswordHash();
     }
 
     @Override
@@ -36,7 +42,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return user.isAccountNonLocked();
     }
 
     @Override

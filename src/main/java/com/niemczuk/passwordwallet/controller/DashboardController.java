@@ -5,6 +5,7 @@ import com.niemczuk.passwordwallet.dto.PasswordPackageDto;
 import com.niemczuk.passwordwallet.entity.User;
 import com.niemczuk.passwordwallet.service.PasswordService;
 import com.niemczuk.passwordwallet.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+@Slf4j
 @Controller
 public class DashboardController {
 
@@ -35,6 +37,7 @@ public class DashboardController {
     @GetMapping("/dashboard")
     public String showDashboardPage(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        log.info("name:"+ auth.getName());
         User user = userService.findUserByLogin(auth.getName());
         model.addAttribute("user", user);
         return "dashboard";

@@ -18,10 +18,15 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final CustomUserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
 
+    private final CustomLoginFailureHandler loginFailureHandler;
+    private final CustomLoginSuccessHandler loginSuccessHandler;
+
     @Autowired
-    public WebSecurityConfiguration(CustomUserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+    public WebSecurityConfiguration(CustomUserDetailsService userDetailsService, PasswordEncoder passwordEncoder, CustomLoginFailureHandler loginFailureHandler, CustomLoginSuccessHandler loginSuccessHandler) {
         this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
+        this.loginFailureHandler = loginFailureHandler;
+        this.loginSuccessHandler = loginSuccessHandler;
     }
 
     @Override
@@ -46,9 +51,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .formLogin().loginPage("/signIn")
-                .defaultSuccessUrl("/dashboard")
                 .usernameParameter("login")
                 .passwordParameter("password")
+                .failureHandler(loginFailureHandler)
+                .successHandler(loginSuccessHandler)
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))

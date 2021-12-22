@@ -30,6 +30,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = userRepository.findByLogin(username);
         AuthExtras.setSalt(user.getSalt());
 
-        return new CustomUserDetails(user.getLogin(), user.getPasswordHash());
+        return new CustomUserDetails(user);
     }
 }
