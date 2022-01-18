@@ -26,6 +26,7 @@
     <!-- Custom styles for this template -->
     <link th:href="@{/css/navbar.css}" rel="stylesheet">
     <script th:href="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/util-functions.js}"></script>
 </head>
 <body>
 <main>
@@ -60,6 +61,12 @@
         </div>
     </nav>
 
+    <div id="shareForm">
+        <form method="post">
+            test
+        </form>
+    </div>
+
     <table class="table mx-5">
         <thead>
         <tr >
@@ -67,6 +74,7 @@
             <th scope="col">Login</th>
             <th scope="col">Description</th>
             <th scope="col">Password</th>
+            <th scope="col">Action</th>
         </tr>
         </thead>
         <tbody>
@@ -75,6 +83,7 @@
             <td th:text="${passwordStoreElement.login}"></td>
             <td th:text="${passwordStoreElement.description}"></td>
             <td th:text="${passwordStoreElement.password}"></td>
+            <td><button class="btn btn-warning" onclick="showOrHidePasswordForm()">Share</button></td>
         </tr>
         </tbody>
     </table>
