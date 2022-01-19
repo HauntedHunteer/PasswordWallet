@@ -49,4 +49,10 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<AppLogin> appLogins = new HashSet<>();
 
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<SharedPassword> userSharedPasswords = new HashSet<>();
+
+    @OneToMany(mappedBy = "sharedTo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<SharedPassword> passwordsSharedToUser = new HashSet<>();
+
 }

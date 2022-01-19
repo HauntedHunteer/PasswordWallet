@@ -14,6 +14,7 @@ import java.util.UUID;
 public interface PasswordRepository extends JpaRepository<Password, UUID> {
 
     @Query(value = "SELECT new com.niemczuk.passwordwallet.dto.PasswordPackageDto(" +
+            "p.id, " +
             "p.login, " +
             "p.password, " +
             "p.webAddress, " +

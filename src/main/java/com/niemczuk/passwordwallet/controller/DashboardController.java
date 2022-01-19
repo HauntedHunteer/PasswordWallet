@@ -3,9 +3,11 @@ package com.niemczuk.passwordwallet.controller;
 import com.niemczuk.passwordwallet.dto.AppLoginReadDto;
 import com.niemczuk.passwordwallet.dto.ChangePasswordDto;
 import com.niemczuk.passwordwallet.dto.PasswordPackageDto;
+import com.niemczuk.passwordwallet.dto.SharePasswordPostDto;
 import com.niemczuk.passwordwallet.entity.User;
 import com.niemczuk.passwordwallet.security.CustomUserDetails;
 import com.niemczuk.passwordwallet.service.PasswordService;
+import com.niemczuk.passwordwallet.service.SharedPasswordService;
 import com.niemczuk.passwordwallet.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +32,13 @@ public class DashboardController {
 
     private final UserService userService;
     private final PasswordService passwordService;
+    private final SharedPasswordService sharedPasswordService;
 
     @Autowired
-    public DashboardController(UserService userService, PasswordService passwordService) {
+    public DashboardController(UserService userService, PasswordService passwordService, SharedPasswordService sharedPasswordService) {
         this.userService = userService;
         this.passwordService = passwordService;
+        this.sharedPasswordService = sharedPasswordService;
     }
 
     @GetMapping("/dashboard")
@@ -63,6 +67,8 @@ public class DashboardController {
 
     @GetMapping("/websitesList")
     public String getPasswordList(Model model) throws Exception {
+        SharePasswordPostDto postDto = new SharePasswordPostDto();
+        model.addAttribute("postDto", postDto);
         model.addAttribute("passwordsList", passwordService.getPasswordList());
         return "websitesListPage";
     }
@@ -83,5 +89,11 @@ public class DashboardController {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         return "redirect:/login?logout";
+    }
+
+    @PostMapping("/sharePassword")
+    public String sharePassword(@ModelAttribute SharePasswordPostDto sharePasswordPostDto) throws Exception {
+        sharedPasswordService.sharePassword(sharePasswordPostDto);
+        return "redirect:/dashboard";
     }
 }

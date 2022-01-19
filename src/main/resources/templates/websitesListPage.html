@@ -64,15 +64,15 @@
     <div class="container" id="shareForm">
         <div class="row">
             <div class="col">
-                <form method="post">
+                <form th:action="@{/sharePassword}" th:object="${postDto}" method="post">
                     <span> Share password to website:</span>
                     <span id="websiteName"></span>
                     <div class="form-floating my-2">
-                        <input class="form-control" id="username" name="username" placeholder="Username">
+                        <input class="form-control" id="username" th:field="*{username}" name="username" placeholder="Username">
                         <label for="username">Username</label>
                     </div>
                     <div class="form-floating my-2">
-                        <input type="hidden" id="passId" name="passId">
+                        <input type="hidden" id="passId" th:field="*{passwordId}" name="passId">
                     </div>
                     <button class="w-100 btn btn-lg btn-warning" type="submit">Share</button>
                 </form>
