@@ -27,14 +27,12 @@ public class SharedPasswordService {
     private final UserRepository userRepository;
     private final SharedPasswordRepository sharedPasswordRepository;
     private final PasswordRepository passwordRepository;
-    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public SharedPasswordService(UserRepository userRepository, SharedPasswordRepository sharedPasswordRepository, PasswordRepository passwordRepository, PasswordEncoder passwordEncoder) {
+    public SharedPasswordService(UserRepository userRepository, SharedPasswordRepository sharedPasswordRepository, PasswordRepository passwordRepository) {
         this.userRepository = userRepository;
         this.sharedPasswordRepository = sharedPasswordRepository;
         this.passwordRepository = passwordRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     public void sharePassword(SharePasswordPostDto postDto) throws Exception {
