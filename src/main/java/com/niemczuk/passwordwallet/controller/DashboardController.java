@@ -5,7 +5,6 @@ import com.niemczuk.passwordwallet.dto.ChangePasswordDto;
 import com.niemczuk.passwordwallet.dto.PasswordPackageDto;
 import com.niemczuk.passwordwallet.dto.SharePasswordPostDto;
 import com.niemczuk.passwordwallet.entity.User;
-import com.niemczuk.passwordwallet.security.CustomUserDetails;
 import com.niemczuk.passwordwallet.service.PasswordService;
 import com.niemczuk.passwordwallet.service.SharedPasswordService;
 import com.niemczuk.passwordwallet.service.UserService;
@@ -95,5 +94,12 @@ public class DashboardController {
     public String sharePassword(@ModelAttribute SharePasswordPostDto sharePasswordPostDto) throws Exception {
         sharedPasswordService.sharePassword(sharePasswordPostDto);
         return "redirect:/dashboard";
+    }
+
+    @GetMapping("/sharedPasswordsLists")
+    public String getSharedPasswordsLists(Model model) throws Exception {
+        model.addAttribute("sharedPasswordListForOwner", sharedPasswordService.getSharedPasswordListForOwner());
+        model.addAttribute("sharedPasswordListForUser", sharedPasswordService.getSharedPasswordListForUser());
+        return "sharedPasswordListPage";
     }
 }

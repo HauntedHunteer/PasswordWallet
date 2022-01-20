@@ -18,7 +18,10 @@ public class SharedPassword {
     private UUID id;
 
     @Column(nullable = false)
-    private String password;
+    private String sharedPassword;
+
+    @Column(nullable = false)
+    private String ownerPassword;
 
     private String webAddress;
 
