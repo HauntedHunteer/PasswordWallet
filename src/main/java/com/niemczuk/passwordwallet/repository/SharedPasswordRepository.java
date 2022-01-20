@@ -15,6 +15,7 @@ import java.util.UUID;
 public interface SharedPasswordRepository extends JpaRepository<SharedPassword, UUID> {
 
     @Query(value = "SELECT new com.niemczuk.passwordwallet.dto.SharedPasswordOwnerDto( " +
+            "sp.id, " +
             "sp.login, " +
             "sp.ownerPassword, " +
             "sp.webAddress, " +

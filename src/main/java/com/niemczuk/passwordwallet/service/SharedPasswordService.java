@@ -20,6 +20,7 @@ import static com.niemczuk.passwordwallet.utility.AESenc.*;
 
 import java.security.Key;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -106,6 +107,10 @@ public class SharedPasswordService {
         });
 
         return passwordListForUser;
+    }
+
+    public void deleteSharedPassword(UUID sharedPasswordId) {
+        sharedPasswordRepository.deleteById(sharedPasswordId);
     }
 
     private User getLoggedUser() {
